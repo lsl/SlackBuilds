@@ -1,0 +1,27 @@
+README.slack
+
+As Tor Browser Bundle (TBB) is self contained in nature some adjustments were required in order to
+get around various permission problems. This is due to a number of files, both pre-existing in the binary tarball and created during use of TBB that require ownership belonging to the user running the application. This is obviously a problem as after being installed from a package to /usr/lib/ ownership belongs to root.
+
+One could just use TBB as intended, e.g download the latest tarball, extract it somewhere in your home directory and run it from there. How ever I feel this is inconveniant in many situations; If multiple people use the computer, each with thier own user account for example. Now theres multiple copies of TBB that require updating. Or if you wish to include TBB in a custom set of installation ISO's so everything is just how you want it after a fresh install. Or simply so you can install/update via a package management system. What ever the case may be I have written a script (tbb-user.sh) to make this all very easy and included it in this package. For more details see README.tbb-user
+
+Upon installation this package also adds a few lines to /etc/kde/kdm/Xstartup this is simply for user convenience, making the package require no configuration after installation, a simple log out/log back in is all that is required. tbb-user.sh will be launched when ever a user logs in via kdm, configuring TBB for the logged in user. This is assuming users who require this functionality use kdm (which will most often be the case)
+
+For everyone else (or those that do not wish to log out :P) simply run (as root) 
+
+tbb-user.sh username groupname 
+
+Where username is the name of the user you wish to run TBB as and groupname is the group you would like to have ownership (This will almost always be 'users') e.g:
+
+tbb-user.sh xocel users
+
+Note: TBB can only be configured to run as one user at a time. If it is configured for user A, then gets configured for user B, in order for user A to use TBB again they need to relaunch the script.
+
+Note: It is highly recommended to run "tbb-user.sh --restore" before removing or updating this package.
+
+If you encounter any problems with this package or the tbb-user.sh script please do not bother the Tor team, both the package and tbb-user.sh are in no way affiliated or supported by the Tor Project. 
+
+Send all bug reports/feedback to the creator of this package and the tbb-user.sh script.
+
+Luke Williams
+xocel@iquidus.org

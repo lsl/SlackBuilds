@@ -1,0 +1,31 @@
+tbb-user.sh
+
+tbb-user is a bash script that configures Tor Browser Bundle (TBB) to be run as the specified user, when ownership belongs to root. This script is useful if you wish to install TBB to your system via a package management system, have multiple user accounts using TBB or would like to include TBB in a custom set of installation ISO's
+
+At this point in time this script has only been tested on Slackware Linux. I can not gaurentee the intended behaviour of the script on other distributions, the concept will remain the same though. e.g copy required files to somewhere user can have ownership permissions ( ~/.TBB ), create symlinks pointing to new locations.
+
+script must be placed in TBB root dir (Same dir as start_tor_browser) and ran as root. 
+
+Configuring TBB for a different user
+
+usage: tbb-user.sh <username> <groupname>
+   e.g tbb-user.sh xocel users
+
+Restore option : Removes all files created by tbb-user.sh from all users home directories, removes symlinks and restores the Data directory to its orignal state.
+
+usage: tbb-user.sh --restore
+
+It is highly recommended to run "tbb-user.sh --restore" before removing or updating TBB.
+
+If you would like the script to be launched when ever a user logs in (If multiple people use the computer for example) the easiest way to achive this is via a session manager.  In kdm for example, configure /etc/kde/kdm/Xstartup adding something like the following to the end of the script.
+
+if [ -x /usr/sbin/tbb-user.sh ]; then
+        /usr/sbin/tbb-user.sh $USER users
+fi;
+
+Now when ever a user logs in via kdm, TBB will be configured for them, all ready to go. Both gdm and xdm have equivalent scripts to Xstartup that tbb-user.sh can be launched from.
+
+tbb-user.sh is not affliated with/or supported by the Tor Project. For all enquiries/feedback contact the maintaner of this script. All feedback is much appriciated.
+
+Luke Williams
+xocel@iquidus.org
