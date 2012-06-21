@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Sublime Text
+GenericName=Text Editor
+Exec=sublime_text
+Icon=sublime_text.png
+Type=Application
+Terminal=false
+X-KDE-StartupNotify=true
+Categories=TextEditor;
