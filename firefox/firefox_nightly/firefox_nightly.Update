@@ -47,18 +47,19 @@ LATEST_BUILD=$(head -n 1 "$TEMPDIR/$LATEST_TEXT")
 LATEST_VERSION=$(basename $(echo $LATEST_TEXT | cut -f 2 -d -) .en)
 
 # Check for current install
-ls "/var/log/packages/${PRGNAM}-*" > /dev/null 2>&1
+ls /var/log/packages/${PRGNAM}-* > /dev/null 2>&1
 if [ $? -eq 0 ]; then
 	# Determine currently installed package details.
-	CURRENT_PKG=$(basename $(ls "/var/log/packages/${PRGNAM}-*")) 
+	CURRENT_PKG=$(basename $(ls /var/log/packages/${PRGNAM}-*)) 
     CURRENT_VER=$(echo $CURRENT_PKG | cut -f 2 -d - | tr "_" "\n" | head -n 1)
 	CURRENT_INSTALL="/usr/lib${LIBDIRSUFFIX}/${PRGNAM}-${CURRENT_VER}"
 	CURRENT_BUILD=$(grep BuildID "$CURRENT_INSTALL/application.ini" | sed 's#BuildID=##g')
-	if [ "$LATEST_BUILD" -gt "$CURRENT_BUILD" ]; then
+	if [ $LATEST_BUILD -gt $CURRENT_BUILD ]; then
 		echo "A newer build of Firefox Nightly is available (${LATEST_BUILD})"
 
 	else
 		echo "Firefox Nightly (${LATEST_BUILD}) is up to date."
+		exit 0
 	fi
 fi
 
@@ -70,5 +71,5 @@ echo $LATEST_BUILD >> $CONFIG
 echo "${PRGNAM}.SlackBuild is ready to build the latest package (${LATEST_BUILD})"
 
 # Clean up 
-#rm -rf $TEMPDIR
+rm -rf $TEMPDIR
 
