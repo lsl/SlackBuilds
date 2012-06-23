@@ -45,7 +45,8 @@ LATEST_TEXT=$(grep -o "firefox.*linux-$ARCH\.txt\"" "$TEMPDIR/index.html" | tail
 wget -q "${SRCURL}${LATEST_TEXT}" -P $TEMPDIR
 LATEST_BUILD=$(head -n 1 "$TEMPDIR/$LATEST_TEXT")
 LATEST_VERSION=$(basename $(echo $LATEST_TEXT | cut -f 2 -d -) .en)
-
+UPGRADE=0
+INSTALLED=0
 # Check for current install
 ls /var/log/packages/${PRGNAM}-* > /dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -54,12 +55,13 @@ if [ $? -eq 0 ]; then
     CURRENT_VER=$(echo $CURRENT_PKG | cut -f 2 -d - | tr "_" "\n" | head -n 1)
 	CURRENT_INSTALL="/usr/lib${LIBDIRSUFFIX}/${PRGNAM}-${CURRENT_VER}"
 	CURRENT_BUILD=$(grep BuildID "$CURRENT_INSTALL/application.ini" | sed 's#BuildID=##g')
+	INSTALLED=1
 	if [ $LATEST_BUILD -gt $CURRENT_BUILD ]; then
+		$UPGRADE=1
 		echo "A newer build of Firefox Nightly is available (${LATEST_BUILD})"
-
 	else
 		echo "Firefox Nightly (${LATEST_BUILD}) is up to date."
-		exit 0
+		#exit 0
 	fi
 fi
 
@@ -73,3 +75,8 @@ echo "${PRGNAM}.SlackBuild is ready to build the latest package (${LATEST_BUILD}
 # Clean up 
 rm -rf $TEMPDIR
 
+NEWPKG=$(./${PRGNAM}.SlackBuild | tail -n 2 | head -n 1 | cut -f 3 -d " ")
+echo "newpkg: $NEWPKG"
+if [  $UPGRADE -eq 1 ]; then
+
+fi

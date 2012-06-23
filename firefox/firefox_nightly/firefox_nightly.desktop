@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Firefox Nightly
-Exec=fire_nightly %u
+Exec=firefox_nightly %u
 Icon=firefox_nightly
 Type=Application
 Terminal=false
