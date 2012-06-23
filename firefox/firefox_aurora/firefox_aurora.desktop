@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Firefox Aurora
+Exec=firefox_aurora %u
+Icon=firefox_aurora
+Type=Application
+Terminal=false
+X-KDE-StartupNotify=true
+Categories=Network;

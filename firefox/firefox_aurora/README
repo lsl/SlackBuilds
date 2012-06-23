@@ -1,0 +1,22 @@
+Firefox Aurora (These builds are for testing purposes only)
+      
+Firefox Aurora is a developmental channel for new Firefox releases. 
+It's designed to showcase the more experimental builds of Firefox.  
+The Nightly channel allows users to experience the newest Firefox
+innovations in an unstable environment and provide feedback on
+features and performance to help determine what makes the final
+release.
+
+This package is created from binary tarballs provided by mozilla.
+As Firefox Aurora has nightly updates I have also provided a script
+"firefox_aurora.Update" This script checks for updates, and writes the 
+latest available tarball info to "firefox_aurora.Update.conf", If the 
+.conf file exists the build script will use that information to download 
+the latest tarball and create the new package. Ignoring version/build numbers 
+written in the script. This is simply for convenience as I feel manually modifying 
+the SlackBuild each day is not feasible. 
+
+For more info about Firefox Aurora see: http://www.mozilla.org/en-US/firefox/aurora/
+
+Please submit all enquiries/feedback concerning any of the scripts included in this package to 
+xocel@iquidus.org

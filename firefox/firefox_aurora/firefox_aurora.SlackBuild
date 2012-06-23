@@ -7,17 +7,17 @@
 # Written by Luke Williams ( xocel@iquidus.org )
 
 # Package details
-PRGNAM="firefox_nightly"
-VERSION=${VERSION:-16.0a1}	
+PRGNAM="firefox_aurora"
+VERSION=${VERSION:-15.0a2}	
 BUILD=${BUILD:-1}
 TAG=${TAG:-_xcl}
 
-SRCVER="16.0a1" # Version of tarball.
-SRCBUILD="20120620065138" # Build of tarball
+SRCVER="16.0a2" # Version of tarball.
+SRCBUILD="20120623042007" # Build of tarball
 
-if [ -e "firefox_nightly.Update.conf" ]; then
-  SRCVER=$(head -n 1 ./firefox_nightly.Update.conf)
-  SRCBUILD=$(tail -n 1 ./firefox_nightly.Update.conf)
+if [ -e "firefox_aurora.Update.conf" ]; then
+  SRCVER=$(head -n 1 ./firefox_aurora.Update.conf)
+  SRCBUILD=$(tail -n 1 ./firefox_aurora.Update.conf)
 fi
 
 PKGVER="$SRCVER_$SRCBUILD"
@@ -49,7 +49,7 @@ fi
 TARBALL=firefox-${SRCVER}.en-US.linux-${SRCARCH}.tar.bz2 # Name of tarball
 TARBALL_ROOT=firefox # Name of tarballs root directory
 SOURCE="$CWD/$TARBALL"
-SRCURL="http://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/latest-trunk/$TARBALL"
+SRCURL="http://ftp.mozilla.org/pub/mozilla.org/firefox/nightly/latest-mozilla-aurora/$TARBALL"
 
 # Source file availability:
 if ! [ -f ${SOURCE} ]; then
@@ -109,12 +109,12 @@ cat $CWD/slack-desc > $PKG/install/slack-desc
 # Copy icon to pixmaps directory
 mkdir $PKG/usr/share/pixmaps
 cd $PKG/usr/share/pixmaps
-cp $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/icons/mozicon128.png ./firefox_nightly.png
+cp $PKG/usr/lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/icons/mozicon128.png ./firefox_aurora.png
 
 # Create symlink
 mkdir $PKG/usr/bin
 cd $PKG/usr/bin
-ln -sf ../lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/firefox ./firefox_nightly
+ln -sf ../lib${LIBDIRSUFFIX}/$PRGNAM-$VERSION/firefox ./firefox_aurora
 
 # Make the package
 cd $PKG
