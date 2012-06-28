@@ -1,13 +1,17 @@
 #!/bin/bash
 
-# Slackware build script for Sublime Text 2 ( Build 2181 )
+# Slackware build script for Sublime Text 2.0
 # Builds a Slackware package from the Sublime Text 2 binary tarballs. 
 # Anyone can freely modify and/or distribute this script without restrictions
 #
 # Written by Luke Williams ( xocel@iquidus.org )
 
+## Changelog (20120628)
+# Updated for Sublime Text 2.0
+# xocel@iquidus.org
+
 PRGNAM="sublime_text"
-VERSION=${VERSION:-2_2181}	
+VERSION=${VERSION:-2.0}	
 BUILD=${BUILD:-1}
 TAG=${TAG:-_xcl}
 
@@ -26,8 +30,8 @@ TMP=${TMP:-/tmp/SBo}	# For consistency's sake, use this
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}	# Drop the package in /tmp
 
-TARBALL_x86="Sublime Text 2 Build 2181.tar.bz2" # Name of 32bit tarball
-TARBALL_x86_64="Sublime Text 2 Build 2181 x64.tar.bz2" # Name of 64bit tarball
+TARBALL_x86="Sublime Text 2.0.tar.bz2" # Name of 32bit tarball
+TARBALL_x86_64="Sublime Text 2.0 x64.tar.bz2" # Name of 64bit tarball
 TARBALL_ROOT="Sublime Text 2" # Name of tarballs root directory
 
 # Set LIBDIRSUFFIX and TARBALL. 
