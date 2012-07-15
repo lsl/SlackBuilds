@@ -6,6 +6,6 @@ MD5SUM="6d1fbbfab5df4df70564c09f5067a9ef"
 DOWNLOAD_x86_64="http://c758482.r82.cf2.rackcdn.com/Sublime Text 2.0 x64.tar.bz2"
 MD5SUM_x86_64="a157b7ae2616013b6ea21f308f277948"
 MAINTAINER="Luke Williams"
-EMAIL="luke@iquidus.org"
+EMAIL="xocel@iquidus.org"
 APPROVED=""
 
