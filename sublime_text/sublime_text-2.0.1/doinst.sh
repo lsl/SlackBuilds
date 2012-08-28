@@ -1,6 +1,9 @@
-( cd usr/bin ; rm -rf sublime_text )
-if [ -e usr/lib64/sublime_text-2.0.1 ]; then
-  ( cd usr/bin ; ln -sf ../lib64/sublime_text-2.0.1/sublime_text sublime_text )
-else
-  ( cd usr/bin ; ln -sf ../lib/sublime_text-2.0.1/sublime_text sublime_text )
+if [ -x /usr/bin/update-desktop-database ]; then
+ /usr/bin/update-desktop-database -q usr/share/applications >/dev/null 2>&1
+fi
+
+if [ -e usr/share/icons/hicolor/icon-theme.cache ]; then
+ if [ -x /usr/bin/gtk-update-icon-cache ]; then
+ /usr/bin/gtk-update-icon-cache usr/share/icons/hicolor >/dev/null 2>&1
+ fi
 fi

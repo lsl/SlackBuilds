@@ -1,9 +1,8 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Sublime Text
 GenericName=Text Editor
 Exec=sublime_text
-Icon=sublime_text.png
+Icon=sublime_text
 Type=Application
 Terminal=false
-Categories=TextEditor;
+Categories=Utility;TextEditor;
