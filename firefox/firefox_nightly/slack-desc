@@ -1,9 +1,0 @@
-firefox_nightly: Firefox Nightly (These builds are for testing purposes only)
-firefox_nightly:      
-firefox_nightly: Firefox Nightly is a developmental channel for new Firefox releases. 
-firefox_nightly: It's designed to showcase the more experimental builds of Firefox.  
-firefox_nightly: The Nightly channel allows users to experience the newest Firefox
-firefox_nightly: innovations in an unstable environment and provide feedback on
-firefox_nightly: features and performance to help determine what makes the final
-firefox_nightly: release.
-firefox_nightly:

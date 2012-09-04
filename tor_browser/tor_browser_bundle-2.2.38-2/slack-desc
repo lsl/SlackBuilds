@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Line up the first '|' above the ':' following the base package name, and
+# the '|' on the right side marks the last column you can put a character in.
+# You must make exactly 11 lines for the formatting to be correct. It's also
+# customary to leave one space after the ':' except on otherwise blank lines.
+
+                  |-----handy-ruler------------------------------------------------------|
+tor_browser_bundle: Tor Browser Bundle (Secure Web Browser)
+tor_browser_bundle:      
+tor_browser_bundle: The Tor Browser Bundle lets you use Tor on Windows, Mac OS X, or 
+tor_browser_bundle: Linux without needing to install any software. It can run off a USB 
+tor_browser_bundle: flash drive, comes with a pre-configured web browser to protect your 
+tor_browser_bundle: anonymity, and is self-contained.
+tor_browser_bundle: 
+tor_browser_bundle: For more info visit: 
+tor_browser_bundle: https://www.torproject.org/projects/torbrowser.html
+tor_browser_bundle:
+tor_browser_bundle:

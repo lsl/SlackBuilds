@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Tor Browser
 Exec=start-tor-browser
 Icon=tor_browser_bundle
 Type=Application
 Terminal=false
-X-KDE-StartupNotify=true
+X-KDE-StartupNotify=false
 Categories=Network;
 

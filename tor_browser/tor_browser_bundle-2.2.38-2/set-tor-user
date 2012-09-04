@@ -1,0 +1,142 @@
+#!/bin/bash
+#
+# set-tor-user ( 20120903 )
+#
+# Configures Tor Browser Bundle to run as the specified user when ownership belongs to root. 
+# This script must be placed it TBB's root directory (with start-tor-browser)
+# Anyone can freely modify and/or distribute this script without restrictions
+#
+# Written by Luke Williams ( xocel@iquidus.org )
+
+function usage {
+    # Outputs usage
+    echo "Configures Tor Browser Bundle to be run by the specified user"
+    echo "Usage: `basename $0` [options] [username] "
+    echo " "
+    echo "Options:"
+    echo "   -g, --group [groupname] , Sets group"
+    echo "                             default: \"users\""
+    echo "   -r, --restore           , Removes all files created by `basename $0`" 
+    echo "                             from the system and restores TBB to its"
+    echo "                             orignal state."
+    echo " "
+}
+
+#Make sure script is being run as root.
+if [ "`id -u`" -ne 0 ]; then
+    echo "This script needs to be run as root"
+    exit 1
+fi
+
+#Check if script is being run through a symlink.
+MYNAME="$0"
+if [ -L "$MYNAME" ]; then
+    MYNAME="`readlink -f "$MYNAME" 2>/dev/null`"
+    if [ "$?" -ne 0 ]; then
+        # Ugh.
+        echo "`basename $0` cannot be run using a symlink on this operating system."
+    fi
+fi
+
+#make sure we are in the right directory.
+CWD="`dirname "$MYNAME"`"
+test -d "$CWD" && cd "$CWD"
+
+if [ $# -eq 0 ]; then
+    usage
+    exit 1
+fi
+
+GROUP="users"
+ORIG="$CWD/Data.orig"
+
+while [ 0 ]; do
+  if [ "$1" = "-g" -o "$1" = "--group" ]; then
+    if [ -z "$2" ]; then
+        GROUP=$2
+        shift 2
+    else
+        usage
+        exit 1
+    fi
+  elif [ "$1" = "-r" -o "$1" = "--restore" ]; then
+    echo "Removing TBB files from home directories"
+    rm -rfv /home/*/.TBB > /dev/null 2>&1
+    echo "Removing symlinks"
+    rm -rvf "$CWD/.config" > /dev/null 2>&1
+    rm -rvf "$CWD/.kde" > /dev/null 2>&1
+    rm -rvf "$CWD/.mozilla" > /dev/null 2>&1
+    rm -rvf "$CWD/.nv" > /dev/null 2>&1
+    echo "Restoring Data directory"
+    if [ -e $ORIG ]; then
+        rm -v  "$CWD/Data" > /dev/null 2>&1
+        mv -v $ORIG "$CWD/Data" > /dev/null 2>&1
+    fi
+    echo "All operations have completed successfully"
+    exit 0
+  else
+    USERNAME=$1
+    break
+  fi
+done
+
+#Check if user exists
+USER_EXISTS=$(grep -c ^$USERNAME: /etc/passwd)
+if [ $USER_EXISTS -ne "1" ]; then
+    echo "Invalid username: $USERNAME"
+    exit 1
+fi
+
+#Check user belongs to group
+IN_GROUP=0 #1 if user belongs to group, otherwise 0.
+USER_GROUPS=$(echo $(groups $USERNAME) | tr " " "\n")
+for g in $USER_GROUPS
+do
+    if [ $g == $GROUP ]
+    then
+        IN_GROUP=1
+    fi
+done
+
+if [ $IN_GROUP -ne 1 ]; then
+    echo "$USERNAME does not belong to group: $GROUP"
+    exit 1
+fi
+
+#check to see if script has been run before.
+#If not, rename Data dir.
+if [ ! -d $ORIG ]; then
+    mv "$CWD/Data" $ORIG
+fi
+
+TBB="/home/$USERNAME/.TBB"
+
+#check to see if .TBB exists in specified users home dir.
+#If not, create ~/.TBB, copy Data dir into it and create conf dirs.  
+if [ ! -d $TBB ]; then
+    mkdir $TBB
+    cp -R $ORIG "$TBB/Data"
+    mkdir "$TBB/.config"
+    mkdir "$TBB/.kde"
+    mkdir "$TBB/.mozilla"
+    mkdir "$TBB/.nv"
+    chown -R $USERNAME.$GROUP $TBB
+fi
+#check if symlinks exist, if so remove them.
+if [ -e "$CWD/Data" ]; then
+    rm "$CWD/Data"
+    rm "$CWD/.config"
+    rm "$CWD/.kde"
+    rm "$CWD/.mozilla"
+    rm "$CWD/.nv"
+fi
+
+#create new symlinks.
+ln -s "$TBB/Data" ./
+ln -s "$TBB/.kde" ./
+ln -s "$TBB/.config" ./
+ln -s "$TBB/.mozilla" ./
+ln -s "$TBB/.nv" ./
+
+#Configuration complete.
+echo "Tor Browser Bundle is now configured to be run by $USERNAME"

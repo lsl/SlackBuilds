@@ -1,0 +1,40 @@
+set-tor-user
+
+set-tor-user is a bash script that configures Tor Browser Bundle (TBB) to be run as the specified user, when ownership belongs to root. This script is useful if you wish to install TBB to your system via a package management system, have multiple user accounts using TBB or would like to include TBB in a custom set of installation ISO's
+
+script must be placed in TBB root dir (Same dir as start_tor_browser) and ran as root. 
+
+* Using set-tor-user
+
+Usage: set-tor-user [options] [username]
+
+Options:
+   -g, --group [groupname]  Sets group
+                            default: "users"
+   -r, --restore            Removes all files created by set-tor-user 
+                            from the system and restores TBB to its
+                            orignal state.
+
+Examples:
+
+set-tor-user xocel
+set-tor-user xocel -g groupx
+set-tor-user --restore
+
+* Automatically launching script on user login
+
+If you would like the script to be launched when ever a user logs in (If multiple people use the computer for example) the easiest way to achieve this is via a session manager.  In kdm for example, configure /etc/kde/kdm/Xstartup adding something like the following to the end of the script.
+
+if [ -x /opt/tor_browser_bundle/set-tor-user ]; then
+        /opt/tor_browser_bundle/set-tor-user $USER users
+fi;
+
+Now when ever a user logs in via kdm, TBB will be configured for them, all ready to go. Both gdm and xdm have equivalent scripts to Xstartup that set-tor-user can be launched from.
+
+
+
+
+set-tor-user is not affliated with/or supported by the Tor Project. For all enquiries/feedback contact the maintaner of this script. All feedback is much appriciated.
+
+Luke Williams
+xocel@iquidus.org

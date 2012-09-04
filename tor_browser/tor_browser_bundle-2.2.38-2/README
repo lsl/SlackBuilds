@@ -1,0 +1,9 @@
+The Tor software protects you by bouncing your communications around a distributed network of relays run by volunteers all around the world: it prevents somebody watching your Internet connection from learning what sites you visit, it prevents the sites you visit from learning your physical location, and it lets you access sites which are blocked.
+
+The Tor Browser Bundle (TBB) lets you use Tor on Windows, Mac OS X, or Linux without needing to install any software. It can run off a USB flash drive, comes with a pre-configured web browser to protect your anonymity, and is self-contained.
+
+Note: An additional script ( /opt/tor_browser_bundle/set-tor-user ) is included in order to fix the various permission problems TBB encounters when installed system wide. After installation of this package TBB needs to be configured for the user you wish to run it as. This can be done using the set-tor-user script (as root) e.g:
+
+set-tor-user <username>
+
+For more information see README-set-tor-user

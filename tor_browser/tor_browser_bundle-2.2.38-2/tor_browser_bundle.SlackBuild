@@ -1,15 +1,20 @@
-#!/bin/bash
+#!/bin/sh
 
-# Slackware build script for Sublime Text 2.0.1
-# Builds a Slackware package from the Sublime Text 2 binary tarballs. 
+# Slackware build script for Tor Browser Bundle ( Version: 2.2.38-2 )
+# Builds a Slackware package from Tor Browser Bundle binary tarballs. 
 # Anyone can freely modify and/or distribute this script without restrictions
 #
 # Written by Luke Williams ( xocel@iquidus.org )
 
-PRGNAM=sublime_text
-VERSION=${VERSION:-2.0.1} 
+PRGNAM=tor_browser_bundle
+VERSION=${VERSION:-2.2.38_2}	
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
+
+# Set Langauge. Available languages are; 
+# en-US, ar, de, es-ES, fa, fr, it, ko, nl, pl, pt-PT, ru, vi, zh-CN 
+LANG="en-US"
+SRCVER="2.2.38-2" # Version of TBB tarball.
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -24,27 +29,26 @@ TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 
-TARBALL_x86="Sublime Text 2.0.1.tar.bz2" # Name of 32bit tarball
-TARBALL_x86_64="Sublime Text 2.0.1 x64.tar.bz2" # Name of 64bit tarball
-TARBALL_ROOT="Sublime Text 2" # Name of tarballs root directory
-
-# Set LIBDIRSUFFIX and TARBALL. 
+# Set LIBDIRSUFFIX and SRCARCH.
 if [ "$ARCH" = "x86_64" ]; then
   LIBDIRSUFFIX="64"
-  TARBALL="$TARBALL_x86_64"
+  SRCARCH="x86_64"
 else
   LIBDIRSUFFIX=""
-  TARBALL="$TARBALL_x86"
+  SRCARCH="i686"
 fi
+
+TARBALL=tor-browser-gnu-linux-${SRCARCH}-${SRCVER}-dev-${LANG}.tar.gz # Name of tarball
+TARBALL_ROOT=tor-browser_${LANG} # Name of tarballs root directory
 
 set -eu
 
 rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
-rm -rf "$TARBALL_ROOT"
+rm -rf $TARBALL_ROOT
 tar -xvf "$CWD/$TARBALL"
-cd "$TARBALL_ROOT"
+cd $TARBALL_ROOT
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -59,19 +63,24 @@ find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | gr
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/bin
-ln -sf /opt/$PRGNAM/sublime_text $PKG/usr/bin
+ln -sf /opt/$PRGNAM/start-tor-browser $PKG/usr/bin
 
 mkdir -p $PKG/usr/share/applications
 cat $CWD/$PRGNAM.desktop > $PKG/usr/share/applications/$PRGNAM.desktop
 
-for size in 16x16 32x32 48x48 128x128 256x256 ; do
-  mkdir -p $PKG/usr/share/icons/hicolor/$size/apps
-  ln -s /opt/$PRGNAM/Icon/$size/sublime_text.png \
-        $PKG/usr/share/icons/hicolor/$size/apps/ ;
-done
+mkdir -p $PKG/usr/share/icons/hicolor/128x128/apps
+ln -s /opt/$PRGNAM/App/Firefox/icons/mozicon128.png \
+      $PKG/usr/share/icons/hicolor/128x128/apps/tor_browser_bundle.png ;
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
+ln -s /opt/$PRGNAM/Docs $PKG/usr/doc/$PRGNAM-$VERSION/
+cat $CWD/README > $PKG/usr/doc/$PRGNAM-$VERSION/README-Slackware
+cat $CWD/README-set-tor-user > $PKG/usr/doc/$PRGNAM-$VERSION/README-set-tor-user
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
+
+# Copy tbb-user.sh into package
+cat $CWD/set-tor-user > $PKG/opt/$PRGNAM/set-tor-user 
+chmod 755 $PKG/opt/$PRGNAM/set-tor-user 
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
